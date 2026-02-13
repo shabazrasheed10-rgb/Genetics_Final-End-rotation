@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>End-Rotation&Final_Genetics_2022-2025</title>
+
+    <style>
+        body {
+            background-color: white;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Tahoma", "Arial", sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            padding: 20px 30px;
+            box-sizing: border-box;
+        }
+
+        .header { 
+            text-align: center; 
+            margin-bottom: 20px;
+            background-color: #2D2D2D;
+            color: white;
+            padding: 14px;
+            border-radius: 7px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Search Bar Styles */
+        .search-container {
+            margin-bottom: 30px;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #search-input:focus {
+            border-color: #729fcf;
+        }
+
+        /* Container for filtering */
+        #quiz-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                flex-direction: column;
+                gap: 8px;
+                padding: 20px 10px;
+            }
+            .header h5 {
+                margin: 2px 0;
+            }
+        }
+
+        .divider { 
+            border: none; 
+            border-top: 1px solid lightgrey; 
+            margin-bottom: 30px; 
+        }
+
+        .q-block {
+            margin-bottom: 40px;
+            border-bottom: 1px solid lightgrey;
+            padding-bottom: 25px;
+            order: 0; /* Default order */
+            background-color: white;
+        }
+
+        .q-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: black;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .opts {
+            list-style-type: none;
+            padding: 0;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .ans-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 50px;
+        }
+
+        .ans-text {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #2e7d32;
+            visibility: hidden;
+            background-color: #f1f8e9;
+            padding: 8px 15px;
+            border-radius: 4px;
+        }
+
+        .q-block.revealed .ans-text {
+            visibility: visible;
+        }
+
+        .ans-btn {
+            background-color: #729fcf;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .ans-btn:hover { 
+            background-color: #5d8ab9; 
+        }
+
+        mark {
+            background-color: yellow;
+            color: black;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+
+        a { 
+            color: #729fcf; 
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="header">
+        <h3>End-Rotation&Final</h3>
+        <h5>HDSF-Genetics</h5>
+        <h5>2022-2025</h5>
+        <h5>Created by <a href="https://t.me/Shabaz_Rasheed">Shabaz Rasheed</a></h5>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search for questions..." onkeyup="handleSearch()">
+    </div>
+
+    <hr class="divider">
+    <div id="quiz-content"></div>
+</div>
+
+<script>
+
+
+
+
+const data = [
+
+  {
+    n: 1,
+    q: "In turner syndrome which one is not happening?",
+    o: [
+      "A. Short stature",
+      "B. Eye folds",
+      "C. Webbed neck",
+      "D. Streak ovaries",
+      "E. Coarctation of the aorta"
+    ],
+    a: "B"
+  },
+  {
+    n: 2,
+    q: "Human gamete (egg-sperm)",
+    o: [
+      "A. 46 Chromosomes",
+      "B. 23 Pairs of chromosomes",
+      "C. Diploid cells",
+      "D. 23 Chromosomes",
+      "E. 44 Autosomes"
+    ],
+    a: "D"
+  },
+  {
+    n: 3,
+    q: "HbB (Bart's hemoglobin) has ____________.",
+    o: [
+      "A. 4 Alpha",
+      "B. 4 Beta",
+      "C. 4 Gamma",
+      "D. 2 Alpha 2 Gamma",
+      "E. 4 Delta"
+    ],
+    a: "C"
+  },
+  {
+    n: 4,
+    q: "DOWN's syndrome:",
+    o: [
+      "A. Monosomy X",
+      "B. Trisomy 18",
+      "C. Deletion of chromosome 15",
+      "D. Extra chromosome 13",
+      "E. Extra chromosome 21 (presence of a third copy of chromosome 21)"
+    ],
+    a: "E"
+  },
+  {
+    n: 5,
+    q: "Monohybrid ratio is?",
+    o: [
+      "A. 9:3:3:1",
+      "B. 1:2:1",
+      "C. 3:1",
+      "D. 1:1",
+      "E. 1:1:1:1"
+    ],
+    a: "B"
+  },
+  {
+    n: 6,
+    q: "According to this notion, the traits acquired during one's lifetime become incorporated into one's hereditary information and are passed on to offspring?",
+    o: [
+      "A. Inheritance of acquired characteristics",
+      "B. Pangenesis",
+      "C. Germ-plasm theory",
+      "D. Blending inheritance",
+      "E. Epigenesis"
+    ],
+    a: "A"
+  },
+  {
+    n: 7,
+    q: "Which of the following is not quantitative?",
+    o: [
+      "A. Height",
+      "B. Weight",
+      "C. Skin color",
+      "D. Blood type",
+      "E. Yield of corn"
+    ],
+    a: "D"
+  },
+  {
+    n: 8,
+    q: "In ichthyosis, what enzyme is deficient?",
+    o: [
+      "A. Hexosaminidase A",
+      "B. Phenylalanine hydroxylase",
+      "C. Steroid sulfatase",
+      "D. Glucose-6-phosphatase",
+      "E. Tyrosinase"
+    ],
+    a: "C"
+  },
+  {
+    n: 9,
+    q: "What is the condition caused by three deletions in the alpha-thalassemia genes?",
+    o: [
+      "A. Alpha-thalassemia trait",
+      "B. Silent carrier",
+      "C. Hydrops fetalis",
+      "D. Cooley's anemia",
+      "E. Hemoglobin H"
+    ],
+    a: "E"
+  },
+  {
+    n: 10,
+    q: "What is the genotype for a male affected with hemophilia?",
+    o: [
+      "A. XhXh",
+      "B. XhY",
+      "C. XHY",
+      "D. XhYh",
+      "E. XHXh"
+    ],
+    a: "B"
+  },
+  {
+    n: 11,
+    q: "What is the name of the concept that describes inheritance as \"Inside the egg or sperm exists a tiny, miniature adult, which is simply enlarged during development?",
+    o: [
+      "A. Cell theory",
+      "B. Pangenesis",
+      "C. Blending inheritance",
+      "D. Performationism",
+      "E. Mendelian inheritance"
+    ],
+    a: "D"
+  },
+  {
+    n: 12,
+    q: "Which of the following is not a trait of albinism?",
+    o: [
+      "A. Strabismus",
+      "B. Nystagmus",
+      "C. Musty odor",
+      "D. Red or blue eyes",
+      "E. White hair"
+    ],
+    a: "C"
+  },
+  {
+    n: 13,
+    q: "A chromosome has the segments AB.CDEFGHI, which mutates to AB.CDGEFHI, what is this type of mutation called?",
+    o: [
+      "A. Inversion",
+      "B. Deletion",
+      "C. Duplication",
+      "D. Translocation",
+      "E. Non-disjunction"
+    ],
+    a: "A"
+  },
+  {
+    n: 14,
+    q: "What is the prenatal diagnosis method when fluid from the womb is taken?",
+    o: [
+      "A. Chorionic villus sampling",
+      "B. Fetoscopy",
+      "C. Ultrasound",
+      "D. Maternal serum screening",
+      "E. Amniocentesis"
+    ],
+    a: "E"
+  },
+  {
+    n: 15,
+    q: "What kind of mutation causes cri-du-chat syndrome?",
+    o: [
+      "A. Trisomy of chromosome 5",
+      "B. A partial deletion in the short arm (p) of chromosome 5 (5p-)",
+      "C. Robertsonian translocation",
+      "D. Inversion of chromosome 5",
+      "E. Ring chromosome 5"
+    ],
+    a: "B"
+  },
+  
+
+  {
+    n: 16,
+    q: "Ichthyosis disease happen due to deficiency in_",
+    o: [
+      "A. Hexosaminidase A",
+      "B. Phenylalanine hydroxylase",
+      "C. Tyrosinase",
+      "D. Steroid sulfatase",
+      "E. Glucose-6-phosphatase"
+    ],
+    a: "D"
+  },
+  {
+    n: 17,
+    q: "Sickle cells animea is a_ disease",
+    o: [
+      "A. Monogenic",
+      "B. X-linked recessive",
+      "C. Multifactorial",
+      "D. Autosomal dominant",
+      "E. Mitochondrial"
+    ],
+    a: "C"
+  },
+  {
+    n: 18,
+    q: "If you are missing two of the four alpha globin chain genes, and then you have which type of thalassemia?",
+    o: [
+      "A. Alpha thalassemia major",
+      "B. Silent carrier state",
+      "C. Hemoglobin H disease",
+      "D. Hydrops fetalis",
+      "E. Alpha thalassemia trait (minor)"
+    ],
+    a: "E"
+  },
+  {
+    n: 19,
+    q: "Chiasma:",
+    o: [
+      "A. Separation of sister chromatids",
+      "B. Crossing over between pairs of homologous chromosomes",
+      "C. Alignment of chromosomes at the equator",
+      "D. Condensation of chromatin",
+      "E. Formation of the spindle apparatus"
+    ],
+    a: "B"
+  },
+  {
+    n: 20,
+    q: "Edwards syndrome:",
+    o: [
+      "A. Presence of third 18th chromosome (having three copies of chromosome 18)",
+      "B. Presence of third 13th chromosome",
+      "C. Presence of third 21st chromosome",
+      "D. Monosomy of the X chromosome",
+      "E. Deletion of the short arm of chromosome 5"
+    ],
+    a: "A"
+  },
+  {
+    n: 21,
+    q: "Number of human body chromosomes:",
+    o: [
+      "A. 23 Chromosome",
+      "B. 44 Chromosome",
+      "C. 48 Chromosome",
+      "D. 46 Chromosome",
+      "E. 92 Chromosome"
+    ],
+    a: "D"
+  },
+  {
+    n: 22,
+    q: "Dihybrid ratio:",
+    o: [
+      "A. 3:1",
+      "B. 1:2:1",
+      "C. 1:3:3:9",
+      "D. 1:1:1:1",
+      "E. 9:7"
+    ],
+    a: "C"
+  },
+  {
+    n: 23,
+    q: "How much bart body (bodies) found in someone which has 48 xxxy",
+    o: [
+      "A. Zero",
+      "B. One",
+      "C. Three",
+      "D. Four",
+      "E. Two"
+    ],
+    a: "E"
+  },
+  {
+    n: 24,
+    q: "Erectile tissue No hair no fat tightens during intercourse",
+    o: [
+      "A. Labia major",
+      "B. Labia minor",
+      "C. Clitoris",
+      "D. Hymen",
+      "E. Mons pubis"
+    ],
+    a: "B"
+  },
+  {
+    n: 25,
+    q: "Father doesn't send disease to his sons but ALL the girls are infected it should be:",
+    o: [
+      "A. Autosomal dominant",
+      "B. Autosomal recessive",
+      "C. X-linked recessive",
+      "D. X linked dominant",
+      "E. Y-linked"
+    ],
+    a: "D"
+  },
+  {
+    n: 26,
+    q: "If husband have A blood type and wife has B blood type which one is possible to the offsprings:",
+    o: [
+      "A. Only AB",
+      "B. Only A and B",
+      "C. AB, O, A, B",
+      "D. Only O",
+      "E. Only AB and O"
+    ],
+    a: "C"
+  },
+  {
+    n: 27,
+    q: "Determine blood group:",
+    o: [
+      "A. RBC",
+      "B. WBC",
+      "C. Platelets",
+      "D. Plasma",
+      "E. Serum"
+    ],
+    a: "A"
+  },
+  {
+    n: 28,
+    q: "Is not a sign of the albinism:",
+    o: [
+      "A. Strabismus",
+      "B. Photophobia",
+      "C. Nystagmus",
+      "D. Hypopigmentation",
+      "E. Chipmunk"
+    ],
+    a: "E"
+  },
+  {
+    n: 29,
+    q: "Cry du chat syndrome:",
+    o: [
+      "A. Absence of long arm of chromosome number 5",
+      "B. Absence of short arm of chromosome number 5",
+      "C. Trisomy of chromosome number 5",
+      "D. Translocation of chromosome number 5",
+      "E. Inversion of chromosome number 5"
+    ],
+    a: "B"
+  },
+  {
+    n: 30,
+    q: "Deletion of three genes of alpha hemoglobin chain causes:",
+    o: [
+      "A. Alpha thalassemia trait",
+      "B. Silent carrier",
+      "C. Hydrops fetalis",
+      "D. Hemoglobin H disease",
+      "E. Beta thalassemia major"
+    ],
+    a: "D"
+  },
+  
+  
+  {
+    n: 31,
+    q: "Which of the following is sexually transmited?",
+    o: [
+      "A. Giardiasis",
+      "B. Amoebiasis",
+      "C. Trichomonas",
+      "D. Malaria",
+      "E. Toxoplasmosis"
+    ],
+    a: "C"
+  },
+  {
+    n: 32,
+    q: "Baldness pattern is:",
+    o: [
+      "A. Sex-Linked Recessive",
+      "B. Autosomal Dominant",
+      "C. Holandric Inheritance",
+      "D. Sex-Limited Traits",
+      "E. Sex-Influenced Traits"
+    ],
+    a: "E"
+  },
+  {
+    n: 33,
+    q: "Is a disease which cause faulty in the chloride ion:",
+    o: [
+      "A. Sickle cell anemia",
+      "B. Cystic fibrous",
+      "C. Phenylketonuria",
+      "D. Tay-Sachs disease",
+      "E. Hemochromatosis"
+    ],
+    a: "B"
+  },
+  {
+    n: 34,
+    q: "Hemophilia C is caused by deficiency of:",
+    o: [
+      "A. Factor XI",
+      "B. Factor IX",
+      "C. Factor VIII",
+      "D. Factor V",
+      "E. Factor XII"
+    ],
+    a: "A"
+  },
+  {
+    n: 35,
+    q: "Missing three alleles of alpha globin genes causes...",
+    o: [
+      "A. Alpha thalassemia trait",
+      "B. Hydrops fetalis",
+      "C. Silent carrier",
+      "D. Hgb H",
+      "E. Beta thalassemia minor"
+    ],
+    a: "D"
+  },
+  {
+    n: 36,
+    q: "According to this notion the traits acquired during one's lifetime become incorporated into one's hereditary information and are passed on to offspring",
+    o: [
+      "A. Germ-plasm theory",
+      "B. Pangenesis",
+      "C. Inheritance of acquired characteristics",
+      "D. Blending inheritance",
+      "E. Epigenesis"
+    ],
+    a: "C"
+  },
+  {
+    n: 37,
+    q: "Ichthyosis is caused by a deficiency of the enzyme:",
+    o: [
+      "A. Tyrosinase",
+      "B. Hexosaminidase A",
+      "C. Phenylalanine hydroxylase",
+      "D. Glucose-6-phosphatase",
+      "E. Steroid sulfatase"
+    ],
+    a: "E"
+  },
+  {
+    n: 38,
+    q: "Which of the following is not quantitative?",
+    o: [
+      "A. Human height",
+      "B. Blood types",
+      "C. Grain color in wheat",
+      "D. Milk production in cattle",
+      "E. Body weight"
+    ],
+    a: "B"
+  },
+  {
+    n: 39,
+    q: "Parahemophilia is caused by deficiency of:",
+    o: [
+      "A. Factor VIII",
+      "B. Factor IX",
+      "C. Factor VII",
+      "D. Factor V",
+      "E. Factor X"
+    ],
+    a: "D"
+  },
+  {
+    n: 40,
+    q: "The males affected with hemophilia B would have a deficiency of clotting factor",
+    o: [
+      "A. VIII (8)",
+      "B. XI (11)",
+      "C. IX (9）",
+      "D. V (5)",
+      "E. VII (7)"
+    ],
+    a: "C"
+  },
+  {
+    n: 41,
+    q: "A man with green colourblindness has......",
+    o: [
+      "A. Deutronopia",
+      "B. Protanopia",
+      "C. Tritanopia",
+      "D. Monochromacy",
+      "E. Achromatopsia"
+    ],
+    a: "A"
+  },
+  {
+    n: 42,
+    q: "Hemophilia A is caused by deficiency of:",
+    o: [
+      "A. Factor IX",
+      "B. Factor XI",
+      "C. Factor V",
+      "D. Factor X",
+      "E. Factor VIII"
+    ],
+    a: "E"
+  },
+  {
+    n: 43,
+    q: "If you have a deletion of two alleles of the alpha-globin chain, you will experience:",
+    o: [
+      "A. Silent carrier",
+      "B. Alpha-thalassemia trait",
+      "C. Alpha-thalassemia major",
+      "D. Hb Bart's disease",
+      "E. Hydrops fetalis"
+    ],
+    a: "B"
+  },
+  {
+    n: 44,
+    q: "In males, Hemophilia B is the most common. It is caused by a deficiency of which factor?",
+    o: [
+      "A. Factor VIII",
+      "B. Factor V",
+      "C. Factor X",
+      "D. Factor IX",
+      "E. Factor XI"
+    ],
+    a: "D"
+  },
+  {
+    n: 45,
+    q: "What is the primary cause of cystic fibrosis and what is it effected by:",
+    o: [
+      "A. Mutation in the HBB gene, and it is affected by altitude",
+      "B. Mutation in the PAH gene, and it is affected by diet",
+      "C. Mutation in the CFTR gene, and it may become more severe with environmental factors",
+      "D. Mutation in the HEXA gene, and it is affected by age",
+      "E. Mutation in the F8 gene, and it is affected by trauma"
+    ],
+    a: "C"
+  },
+  
+
+  {
+    n: 46,
+    q: "What is the basic organizational unit for DNA in chromosomes?",
+    o: [
+      "A. Histone octamer",
+      "B. Chromatin fiber",
+      "C. Solenoid",
+      "D. Centromere",
+      "E. Nucleosome"
+    ],
+    a: "E"
+  },
+  {
+    n: 47,
+    q: "What is the function of telomeres in DNA?",
+    o: [
+      "A. To code for essential metabolic enzymes",
+      "B. To maintain stability of the chromosome and prevent fusion of chromosomes",
+      "C. To initiate the process of DNA replication",
+      "D. To hold sister chromatids together during mitosis",
+      "E. To allow for the attachment of spindle fibers"
+    ],
+    a: "B"
+  },
+  {
+    n: 48,
+    q: "What is the function of bile salts?",
+    o: [
+      "A. To break down complex carbohydrates",
+      "B. To regulate blood glucose levels",
+      "C. To neutralize stomach acid in the duodenum",
+      "D. Helps in digesting lipids",
+      "E. To stimulate the release of pepsinogen"
+    ],
+    a: "D"
+  },
+  {
+    n: 49,
+    q: "What is the prokaryotic mechanism that regulates genetic expression by using enhancers and activators called?",
+    o: [
+      "A. Translation",
+      "B. Transcription",
+      "C. Operon",
+      "D. Promoter",
+      "E. Attenuation"
+    ],
+    a: "C"
+  },
+  {
+    n: 50,
+    q: "Hemophilia B is caused by deficiency of:",
+    o: [
+      "A. Factor IX",
+      "B. Factor VIII",
+      "C. Factor XI",
+      "D. Factor VII",
+      "E. Factor V"
+    ],
+    a: "A"
+  },
+  {
+    n: 51,
+    q: "Which of the following is not a trait for prokaryotes?",
+    o: [
+      "A. Their genes are dispersed in the cytoplasm without a nucleus",
+      "B. They have one circular DNA",
+      "C. They lack membrane-bound organelles",
+      "D. They reproduce primarily through binary fission",
+      "E. They have histones"
+    ],
+    a: "E"
+  }
+
+
+];
+const container = document.getElementById('quiz-content');
+
+// Store original HTML to restore after highlighting
+function renderQuiz() {
+    container.innerHTML = '';
+    data.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'q-block';
+        // We store the searchable text in data attributes for easy access
+        div.dataset.searchText = (item.q + " " + item.o.join(" ")).toLowerCase();
+
+        div.innerHTML = `
+            <div class="q-text" data-original="${item.n}. ${item.q}">${item.n}. ${item.q}</div>
+            <ul class="opts">
+                ${item.o.map(opt => `<li data-original="${opt}">${opt}</li>`).join('')}
+            </ul>
+            <div class="ans-row">
+                <span class="ans-text">Answer: ${item.a}</span>
+                <button class="ans-btn" onclick="this.closest('.q-block').classList.toggle('revealed')">
+                    Answer
+                </button>
+            </div>
+        `;
+        container.appendChild(div);
+    });
+}
+
+function handleSearch() {
+    const searchTerm = document.getElementById('search-input').value.toLowerCase();
+    const blocks = document.querySelectorAll('.q-block');
+
+    blocks.forEach(block => {
+        const qTextElem = block.querySelector('.q-text');
+        const optElems = block.querySelectorAll('li');
+        
+        // Reset content to original before applying new highlights
+        qTextElem.innerHTML = qTextElem.dataset.original;
+        optElems.forEach(li => li.innerHTML = li.dataset.original);
+
+        if (searchTerm.length > 0 && block.dataset.searchText.includes(searchTerm)) {
+            // Move to top
+            block.style.order = "-1";
+            
+            // Highlight Logic
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            
+            qTextElem.innerHTML = qTextElem.innerHTML.replace(regex, '<mark>$1</mark>');
+            optElems.forEach(li => {
+                li.innerHTML = li.innerHTML.replace(regex, '<mark>$1</mark>');
+            });
+        } else {
+            // Reset position
+            block.style.order = "0";
+        }
+    });
+}
+
+renderQuiz();
+</script>
+
+</body>
+</html>
